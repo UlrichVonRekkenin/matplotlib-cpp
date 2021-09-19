@@ -107,30 +107,33 @@ endif(BUILD_EXAMPLES)
 
 
 # Install headers
-install(FILES
-  "${PROJECT_SOURCE_DIR}/matplotlibcpp.h"
-  DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+option(INSTALL_HEADER "Perform installation..." OFF)
+if(INSTALL_HEADER)
+  install(FILES
+    "${PROJECT_SOURCE_DIR}/matplotlibcpp.h"
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
 
-# Install targets file
-install(EXPORT install_targets
-  FILE
-    ${PACKAGE_NAME}Targets.cmake
-  NAMESPACE
-    ${PACKAGE_NAME}::
-  DESTINATION
-    ${INSTALL_CONFIGDIR}
-)
+  # Install targets file
+  install(EXPORT install_targets
+    FILE
+      ${PACKAGE_NAME}Targets.cmake
+    NAMESPACE
+      ${PACKAGE_NAME}::
+    DESTINATION
+      ${INSTALL_CONFIGDIR}
+  )
 
 
-# Install matplotlib_cppConfig.cmake
-include(CMakePackageConfigHelpers)
-configure_package_config_file(
-  ${CMAKE_CURRENT_SOURCE_DIR}/cmake/${PACKAGE_NAME}Config.cmake.in
-  ${CMAKE_CURRENT_BINARY_DIR}/${PACKAGE_NAME}Config.cmake
-  INSTALL_DESTINATION ${INSTALL_CONFIGDIR}
-)
-install(FILES
-  ${CMAKE_CURRENT_BINARY_DIR}/${PACKAGE_NAME}Config.cmake
-  DESTINATION ${INSTALL_CONFIGDIR}
-)
+  # Install matplotlib_cppConfig.cmake
+  include(CMakePackageConfigHelpers)
+  configure_package_config_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/cmake/${PACKAGE_NAME}Config.cmake.in
+    ${CMAKE_CURRENT_BINARY_DIR}/${PACKAGE_NAME}Config.cmake
+    INSTALL_DESTINATION ${INSTALL_CONFIGDIR}
+  )
+  install(FILES
+    ${CMAKE_CURRENT_BINARY_DIR}/${PACKAGE_NAME}Config.cmake
+    DESTINATION ${INSTALL_CONFIGDIR}
+  )
+endif(INSTALL_HEADER)
