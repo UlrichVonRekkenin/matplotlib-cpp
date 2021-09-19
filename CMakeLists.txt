@@ -30,10 +30,6 @@ if(Python3_NumPy_FOUND)
 else()
   target_compile_definitions(matplotlib_cpp INTERFACE WITHOUT_NUMPY)
 endif()
-install(
-  TARGETS matplotlib_cpp
-  EXPORT install_targets
-)
 
 
 # Examples
@@ -109,6 +105,11 @@ endif(BUILD_EXAMPLES)
 # Install headers
 option(INSTALL_HEADER "Perform installation..." OFF)
 if(INSTALL_HEADER)
+  install(
+    TARGETS matplotlib_cpp
+    EXPORT install_targets
+  )
+
   install(FILES
     "${PROJECT_SOURCE_DIR}/matplotlibcpp.h"
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
